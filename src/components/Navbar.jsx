@@ -10,8 +10,11 @@ const Navbar = () => {
     <div className="navbar">
       <span className="logo">Q papinho</span>
       <div className="user">
-        <img src="" alt="" />
-        <span>John</span>
+        <img
+          src="https://cdn.autopapo.com.br/box/uploads/2022/08/22135052/nissan-skyline-gtr-r34-paul-walker-leilao-732x488.png"
+          alt=""
+        />
+        <span>bWUAAAAAAAAA</span>
         <button>logout</button>
       </div>
     </div>

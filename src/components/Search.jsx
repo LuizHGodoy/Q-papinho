@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React from "react";
 // import {
 //   collection,
 //   query,
@@ -78,24 +78,19 @@ const Search = () => {
   // };
   return (
     <div className="search">
-      {/* <div className="searchForm">
-        <input
-          type="text"
-          placeholder="Find a user"
-          onKeyDown={handleKey}
-          onChange={(e) => setUsername(e.target.value)}
-          value={username}
+      <div className="searchForm">
+        <input type="text" placeholder="ihhh quer papinho é?" />
+      </div>
+
+      <div className="userChat">
+        <img
+          src="https://cdn.autopapo.com.br/box/uploads/2022/08/22135052/nissan-skyline-gtr-r34-paul-walker-leilao-732x488.png"
+          alt=""
         />
-      </div> */}
-      {/* {err && <span>User not found!</span>} */}
-      {/* {user && (
-        <div className="userChat" onClick={handleSelect}>
-          <img src={user.photoURL} alt="" />
-          <div className="userChatInfo">
-            <span>{user.displayName}</span>
-          </div>
+        <div className="userChatInfo">
+          <span>STUTUTUTUTU</span>
         </div>
-      )} */}
+      </div>
     </div>
   );
 };

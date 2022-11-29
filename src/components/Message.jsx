@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React from "react";
 // import { AuthContext } from "../context/AuthContext";
 // import { ChatContext } from "../context/ChatContext";
 
@@ -13,12 +13,23 @@ const Message = ({ message }) => {
   // }, [message]);
 
   return (
-    <div
-    // ref={ref}
-    // className={`message ${message.senderId === currentUser.uid && "owner"}`}
-    >
+    <div className="message owner">
       <div className="messageInfo">
-        {/* <img
+        <img
+          src="https://cdn.autopapo.com.br/box/uploads/2022/08/22135052/nissan-skyline-gtr-r34-paul-walker-leilao-732x488.png"
+          alt=""
+        />
+        <span>agora mesmo</span>
+      </div>
+      <div className="messageContent">
+        <p>coe</p>
+        <img
+          src="https://cdn.autopapo.com.br/box/uploads/2022/08/22135052/nissan-skyline-gtr-r34-paul-walker-leilao-732x488.png"
+          alt=""
+        />
+      </div>
+      {/* <div className="messageInfo"> */}
+      {/* <img
           src={
             message.senderId === currentUser.uid
               ? currentUser.photoURL
@@ -26,8 +37,8 @@ const Message = ({ message }) => {
           }
           alt=""
         /> */}
-        <span>just now</span>
-      </div>
+      {/* <span>message</span> */}
+      {/* </div> */}
       {/* <div className="messageContent">
         <p>{message.text}</p>
         {message.img && <img src={message.img} alt="" />}
