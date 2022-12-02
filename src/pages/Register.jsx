@@ -4,52 +4,59 @@ import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth, db, storage } from "../firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
-// import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const Register = () => {
   const [err, setErr] = useState(false);
-  // const [loading, setLoading] = useState(false);
-  // const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    // setLoading(true);
+    setLoading(true);
     e.preventDefault();
     const displayName = e.target[0].value;
     const email = e.target[1].value;
     const password = e.target[2].value;
     const file = e.target[3].files[0];
+    console.log("console log do file", file);
 
     try {
+      //Create user
       const res = await createUserWithEmailAndPassword(auth, email, password);
 
-      // const date = new Date().getTime();
-      const storageRef = ref(storage, displayName);
+      //Create a unique image name
+      const date = new Date().getTime();
+      const storageRef = ref(storage, `${displayName + date}`);
 
       await uploadBytesResumable(storageRef, file).then(() => {
         getDownloadURL(storageRef).then(async (downloadURL) => {
           try {
+            //Update profile
             await updateProfile(res.user, {
               displayName,
               photoURL: downloadURL,
             });
+            //create user on firestore
             await setDoc(doc(db, "users", res.user.uid), {
               uid: res.user.uid,
               displayName,
               email,
               photoURL: downloadURL,
             });
+
+            //create empty user chats on firestore
             await setDoc(doc(db, "userChats", res.user.uid), {});
-            // navigate("/");
+            navigate("/");
           } catch (err) {
             console.log(err);
             setErr(true);
-            // setLoading(false);
+            setLoading(false);
           }
         });
       });
     } catch (err) {
       setErr(true);
-      // setLoading(false);
+      setLoading(false);
     }
   };
 
@@ -59,19 +66,22 @@ const Register = () => {
         <span className="logo">Q papinho</span>
         <span className="title">Registro</span>
         <form onSubmit={handleSubmit}>
-          <input type="text" placeholder="Nome de Usuário" />
-          <input type="email" placeholder="Digite seu e-mail" />
-          <input type="password" placeholder="Digite sua melhor senha!!" />
-          <input type="file" id="avatar" hidden />
-          <label htmlFor="avatar">
+          <input required type="text" placeholder="Nome de Usuário" />
+          <input required type="email" placeholder="Digite seu e-mail" />
+          <input required type="password" placeholder="Digite sua senha!!" />
+          <input required type="file" id="file" hidden />
+          <label htmlFor="file">
             <img src={Add} alt="" />
             <span>Adicionar foto de perfil</span>
           </label>
 
-          <button>Registre-se</button>
+          <button disabled={loading}>Registre-se</button>
+          {loading && "Uploading and compressing the image please wait..."}
           {err && <span>alguma coisa deu errado</span>}
         </form>
-        <p>Já possui uma conta? Login</p>
+        <p>
+          Já possui uma conta? <Link to="/login">Login</Link>
+        </p>
       </div>
     </div>
   );
